@@ -1,0 +1,257 @@
+<!doctype html>
+<html>
+ <head>
+  <title>Garage Sale</title>
+  <style>
+  	body {
+	   margin: 0;
+	   padding: 0;
+	   font: 13px Helvetica; 
+	}
+	
+	a {
+	    text-decoration: none;
+	}
+	
+	#pageContainer {
+	    height: 100%;
+	}
+	
+	#header {
+	    background: #3B5694; 
+	    text-align:  center;		
+		width: 100%;
+		height: 60px;		
+		line-height: 60px;
+	    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.45);
+		-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.45);
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.45);	
+	}
+	
+	#connectIndication {	
+	    -webkit-border-radius: 10px; 
+	    -moz-border-radius: 10px; 
+	    border-radius: 10px; 
+	    border: 1px solid #00B200;		 
+	}	
+	
+	#menuContainer {
+		position: absolute;	
+	    left: 5%;
+		top: 9px;
+	}
+	
+	#menu {
+	    position: relative;
+		text-align: left;
+		display: inline;
+		margin: 0;
+		padding: 10px 4px 12px 0;
+		list-style: none;
+		-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+		-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);	
+	}
+	
+	#menu li {
+	    font: bold 12px/18px sans-serif;
+		display: inline-block;
+		margin-right: -4px;
+		position: relative;
+		padding: 10px 20px;
+		background: #fff;
+		cursor: pointer;
+		-webkit-transition: all 0.2s;
+		-moz-transition: all 0.2s;
+		-ms-transition: all 0.2s;
+		-o-transition: all 0.2s;
+		transition: all 0.2s;
+	}
+	
+	#menuLI {
+		border-radius: 5px 5px 0px 0px;
+	   -moz-border-radius: 5px 5px 0px 0px;
+	   -webkit-border-radius: 5px 5px 0px 0px;
+	}
+	
+	#menu li:hover {
+	    background: #eee;
+	}
+	
+	#menu li:active {
+	    background: #ccc;    
+	}
+	
+	
+	#menu li ul {
+		padding: 0;
+		position: absolute;
+		top: 38px;
+		left: 0;
+		width: 150px;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+		display: none;
+		-webkit-transiton: opacity 0.2s;
+		-moz-transition: opacity 0.2s;
+		-ms-transition: opacity 0.2s;
+		-o-transition: opacity 0.2s;
+		-transition: opacity 0.2s;
+		
+		-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+		-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);	
+	}
+	
+	#menu li ul li { 
+		background: #555; 
+		display: block; 
+		color: #fff;
+		text-shadow: 0 -1px 0 #000;
+	}
+	
+	#menu li ul li:hover { 
+	    background: #666; 
+	}
+	
+	#headerLabel {
+	    color: #FFF;
+		font-size: 150%;
+	}
+	
+    .mainContainer {
+		width: 100%;
+	}
+	
+	.centeredtext {
+	    font-size: 125%;
+	    text-align: center;
+	}
+	
+	#newContainer {
+	    text-align: center;
+		display: block;
+	}	
+	
+	#newForm {
+	   text-align: center;
+	}
+	
+	#newForm input, label {
+	   margin-right: 5px;
+	   padding: 4px;
+	}
+	
+	#newForm button {
+	    margin-right: 2px;
+		font-size: 120%;
+		width: 30px;
+	}
+	
+	#newGarageSaleButton {
+	    margin-top: 15px;
+	    padding: 5px 10px;
+	}
+
+  </style>
+ </head>
+ <body>
+  <div id="pageContainer">
+    <div id="header">
+	  <div id="connectIndication"></div>	
+	  <div id="menuContainer">
+	    <ul id="menu">
+		 <li id="menuLI">
+		   Menu
+		   <ul id="subMenu">
+		     <li id="homeSale">Home</li>
+		   </ul>
+		 </li>
+	    </ul>
+	  </div>
+	  <label id="headerLabel"></label>
+	</div>
+	
+  </div>
+  
+ </body>
+ <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script type="text/javascript" language="javascript">
+  
+    var nameURL;
+	var names = [];
+	var inGarageSale;
+	var serverDisconnected;
+	var socket = io();
+ 
+ 
+ 
+	function buildSaleMenu() {
+	    var newHtml = '<ul id="subMenu"><li id="homeSale">Home</li>';		
+		for(var i=0; i<names.length; i++) {
+		    newHtml += '<a href="/'+names[i]+'"><li id="subMenuLI-'+i+'">'+names[i]+'</li></a>';
+		}
+		newHtml += '<li id="endSale">End Sale</li></ul>';
+		$('#subMenu').replaceWith(newHtml);
+	}
+	
+ 
+	$('#menuLI').click(function() {
+		$('#subMenu').toggle();
+	});
+ 
+ 	$(document).on('click', '#homeSale', function() {
+		//var newHtml = '<div id="saleContainer" class="mainContainer"><p class="centeredText">Welcome to the Sale!</br></br>Advanced Analytics goes here</p></div>';		
+		//$('.mainContainer').replaceWith(newHtml);	   
+		document.location.href = "/";
+	});
+ 
+    $(document).on('click', '#endSale', function() {
+	    socket.emit('end sale', 'now');
+		inGarageSale = false;		
+	    document.location.href = "/";	
+	}); 
+ 
+	$( document ).ready(function() {
+	    serverDisconnected = false;
+		socket.emit('connection', 'pls');
+		var url = window.location.href;
+		nameURL = url.substring(url.lastIndexOf('/') + 1);
+		document.title = nameURL;		
+		$('#headerLabel').text(nameURL);
+	});
+ 
+ 
+	socket.on('in garage sale', function(bool, data) {
+	    console.log('in garage sale');
+	    inGarageSale = bool;
+		if(inGarageSale) {
+		    names = data.slice();
+			for(var i=0; i<names.length; i++) {
+			    if(nameURL == names[i])
+				    return buildSaleMenu();
+			}
+		}
+		document.location.href = "/";
+	});
+ 
+	socket.on('sale over', function(data) {
+		document.location.href = "/";
+	});
+	
+	socket.on('refresh', function(data) {
+		document.location.href = "/";
+	});
+	
+	socket.on('connect', function(data) {
+	    socket.emit('disconnect?', serverDisconnected);
+	});
+	
+	socket.on('disconnect', function(data) {
+	    serverDisconnected = true;
+	});
+ 
+  </script>
+</html>

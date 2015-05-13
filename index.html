@@ -1,0 +1,1164 @@
+<html>
+ <head>
+  <link rel="stylesheet" href="/jquery.mCustomScrollbar.css" />
+  <link rel="shortcut icon" href="/favicon.png?v=2" />
+  <title>Garage Sale</title>
+  <style>
+  	body {
+	   margin: 0;
+	   padding: 0;
+	   font: 13px Helvetica; 
+	}
+	
+	a {
+	    text-decoration: none;
+	}
+	
+	#pageContainer {
+	    height: 100%;
+	}
+	
+	#header {
+	    background: #3B5694; 
+	    text-align:  center;		
+		width: 100%;
+		height: 60px;		
+		line-height: 60px;
+	    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.45);
+		-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.45);
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.45);	
+	}
+	
+	#connectIndication {	
+	    -webkit-border-radius: 10px; 
+	    -moz-border-radius: 10px; 
+	    border-radius: 10px; 
+/*	    border: 1px solid #B20000;		  */
+		border: 1px solid #3B5694;
+	}	
+	
+	#menuContainer {
+		position: absolute;	
+	    left: 5%;
+		top: 9px;
+	}
+	
+	#menu {
+	    position: relative;
+		text-align: left;
+		display: inline;
+		margin: 0;
+		padding: 10px 4px 12px 0;
+		list-style: none;
+		-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+		-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);	
+	}
+	
+	#menu li {
+	    font: bold 12px/18px sans-serif;
+		display: inline-block;
+		margin-right: -4px;
+		position: relative;
+		padding: 10px 20px;
+		background: #fff;
+		cursor: pointer;
+		-webkit-transition: all 0.2s;
+		-moz-transition: all 0.2s;
+		-ms-transition: all 0.2s;
+		-o-transition: all 0.2s;
+		transition: all 0.2s;
+	}
+	
+	#menuLI {
+		border-radius: 5px 5px 0px 0px;
+	   -moz-border-radius: 5px 5px 0px 0px;
+	   -webkit-border-radius: 5px 5px 0px 0px;
+	}
+	
+	#menu li:hover {
+	    background: #eee;
+	}
+	
+	#menu li:active {
+	    background: #ccc;    
+	}
+	
+	
+	#menu li ul {
+		padding: 0;
+		position: absolute;
+		top: 38px;
+		left: 0;
+		width: 150px;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+		display: none;
+		-webkit-transiton: opacity 0.2s;
+		-moz-transition: opacity 0.2s;
+		-ms-transition: opacity 0.2s;
+		-o-transition: opacity 0.2s;
+		-transition: opacity 0.2s;
+		
+		-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+		-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);	
+	}
+	
+	#menu li ul li { 
+		background: #555; 
+		display: block; 
+		color: #fff;
+		text-shadow: 0 -1px 0 #000;
+	}
+	
+	#menu li ul li:hover { 
+	    background: #666; 
+	}
+	
+	#headerLabel {
+	    color: #FFF;
+		font-size: 150%;
+	}
+	
+    .mainContainer {
+		width: 100%;
+	}
+	
+	.centeredtext {
+	    font-size: 125%;
+	    text-align: center;
+	}
+	
+	#newContainer {
+	    text-align: center;
+		display: block;
+	}	
+	
+	#newForm {
+	   text-align: center;
+	}
+	
+	#newForm input, label {
+	   margin-right: 5px;
+	   padding: 4px;
+	}
+	
+	#newForm button {
+		background: #fbfbfc;
+	    margin-right: 2px;
+		font-size: 120%;
+		width: 30px;
+		cursor: pointer;	    
+		border-radius: 5px; 
+		-moz-border-radius: 5px; 
+		-webkit-border-radius: 5px; 
+		border: 1px solid rgba(59, 86, 148, 0.6);
+		padding: 2px 0px;
+	}
+
+	#newGarageSaleButton {
+		background: #fbfbfc;
+	    margin-top: 15px;
+	    padding: 5px 10px;
+		cursor: pointer;	    
+		border-radius: 5px; 
+		-moz-border-radius: 5px; 
+		-webkit-border-radius: 5px;
+		border: 1px solid rgba(59, 86, 148, 0.6);		
+	}
+	
+	#newGarageSaleButton:hover, #newForm button:hover {
+	    background: #f4f5f6;
+	}
+	#newGarageSaleButton:active, #newForm button:active {
+	    background: #edeff0;
+	}
+	
+	#nameInvalidErrorLabel {
+		margin-top: 20px;
+		display: block;
+	    visibility: hidden;
+	}	
+	
+	#nameSameErrorLabel {
+		display: block;
+	    visibility: hidden;
+	}
+	
+	#saleContainer {
+	    text-align: center;
+		width: 100%;
+	}
+	
+	#fieldContainer {
+	    display: block;
+		text-align: center;
+	}
+	
+	#inputContainer {
+	    padding-top: 20px;
+	    display: block;
+	}
+	
+	#inputLabel {
+	    display: block;
+	    font-size: 125%;
+		padding-left: 16px;
+	}
+	
+	#dollar {
+	    font-size: 125%;
+		padding-right: 5px;
+	}
+	
+	#itemInput {
+	    padding: 5px;
+		text-align: right;
+		width: 100px;
+		font-size: 125%;
+	}
+	
+	#buttonContainer {
+	    padding-top: 20px;
+		max-height: 280px;
+		height: 100%;
+		width: 475px;
+		margin: 0 auto;	
+		padding-left: 14px;
+	}
+	
+	#buttonTable {	
+	    float: left;
+	    width: 300px;
+	    top: 0px;
+	    display: inline;
+		margin: 0 auto;
+	}
+	
+	#buttonTable button {
+	    padding: 10px 20px;
+	}
+	
+	#nameTableContainer {
+	    float: left;
+		width: 170px;
+	}
+	
+	#nameTableOuterContainer {
+		display: table;	
+	}
+	
+	#nameTableInnerContainer {
+	    display: table-cell;
+		height: 238px;
+/*		vertical-align: middle;      FOR CENTERING */
+	}
+
+	#nameTable tbody {		
+	    width: 195px;
+		height: auto;
+	    max-height: 238px;
+		overflow-y: auto;
+		overflow-x: hidden;
+		display: block;
+	}
+	
+	#nameTable button {
+	    width: 170px;
+		padding: 9px 0px;
+	}
+	
+	.buttonPriceClass, .buttonNameClass {
+		font: bold 12px/18px sans-serif;
+		background: #fbfbfc;    /*HELP ME*/
+		cursor: pointer;	    
+		border-radius: 5px; 
+		-moz-border-radius: 5px; 
+		-webkit-border-radius: 5px; 
+		border: 1px solid rgba(59, 86, 148, 0.6);
+	}
+	
+	.buttonNameClass:disabled {
+	    border-color: rgba(59, 86, 148, 0.2);
+		background: rgba(251, 251, 252, 0.5);
+		color: rgba(0, 0, 0, 0.4);
+		cursor: default;
+	}	
+	.buttonNameClass:hover:enabled {
+	    background: #f4f5f6;
+	}
+	.buttonNameClass:active:enabled {
+	   /* background: rgba(59, 86, 148, 0.6); */
+		background: rgba(122, 185, 122, 0.3);
+		color: #000;
+	}
+
+	#transactionContainer {
+		width: auto;
+	/*    display: block; */
+		text-align: center;
+		margin-left: 80px;  
+		overflow: hidden;  
+	}
+	
+	#transactionTableLabel {
+	    font-size: 130%;
+		font-weight: 500;
+		margin-right: 70px;    /*40px + margin-left of container below is original */
+	}
+	
+	#transactionTableContainer {
+	/*    display: block;    
+	    overflow-y: auto;
+		overflow-x: hidden;   */
+		max-height: 360px;   
+		margin-top: 15px;
+		width: 100%;
+	/*	padding-right: 15px;  /* TO HIDE SCROLL BAR */
+		margin-left: 12px;
+	}
+	
+	#transactionTable {
+	    margin-left: auto;
+		margin-right: auto;
+		border-collapse: collapse;
+		width: 540px;    /*510px*/
+	}
+	#transactionTable thead {
+	    display: block;
+	}
+	#transactionTable tbody {
+		/*height: 100%; */
+		height: auto;       /* 315 */      /* 311 */
+		max-height: 222px;   /* 400 */      /* 350 */    /*311*/
+	    overflow: auto;
+		display: block;
+	}
+	#transactionTable tfoot {
+	    display: block;
+		visibility: hidden;
+	}
+	#titleHead {
+	    padding-bottom: 10px;
+	}
+	#noHead, #priceHead, #nameHead {
+	    text-align: center;
+		background: rgba(122, 185, 122, 0.8);   
+		/*background: #3B5694;*/
+		color: #FFF;
+		text-shadow: -1px 0 #6da66d, 0 1px #6da66d, 1px 0 #6da66d, 0 -1px #6da66d;  
+	}
+	#noHead {
+		border-left: 1px solid #3d5c3d;      
+		border-top: 1px solid #3d5c3d;  
+		border-bottom: 1px solid #3d5c3d;  
+		width: 20px;
+		/*padding: 0px 16px 0px 18px; */
+		padding: 0px 19px 0px 20px;
+	}
+	#priceHead, #nameHead {
+		border-top: 1px solid #3d5c3d;  
+		border-bottom: 1px solid #3d5c3d; 	 
+	}
+	#priceHead {
+	    width: 110px;
+		/*padding: 0px 17px 0px 18px;	*/	
+		padding: 0px 20px 0px 19px;
+		border-right: 1px solid #3d5c3d;  		
+	}
+	#nameHead {
+		width: 200px;
+	/*	padding: 0px 16px 0px 17px;		*/
+		padding: 0px 19px 0px 19px;
+	}
+	#removeHead {
+	    width: 20px;
+		padding: 0px 20px 0px 5px;
+	}
+	.emptyRow {
+	    background: #FFF;
+		border-bottom: 1px solid #3d5c3d;
+	}
+	.itemNumCell, .priceCell, .nameCell {
+	    border: 1px solid #3d5c3d;
+		/*border-top: 1px solid #3d5c3d;
+		border-left: 1px solid #3d5c3d;
+		border-right: 1px solid #3d5c3d;*/
+		text-align: center;
+		padding: 5px 20px 2px 20px;		
+	}
+	
+	.itemNumCell:nth-child(1), .priceCell:nth-child(3), .nameCell:nth-child(2) {
+	    border-top: none;
+	}
+	.contentRow:nth-child(even) .itemNumCell, .contentRow:nth-child(even) .priceCell, .contentRow:nth-child(even) .nameCell{
+		background: #fbfbfc; 
+	}
+	.itemNumCell {
+	    width: 20px;
+	}
+	.priceCell {
+	    width: 110px;
+	}
+	.nameCell {
+	    width: 200px;
+	}
+	.buttonCell {
+	    width: 20px;
+		text-align: left;
+		padding: 0px 20px 0px 5px;
+	}
+	
+	.removeItem {
+	    margin-left: -5px;
+		padding: 2px 8px 2px 10px;
+		border-radius: 0px 5px 5px 0px; 
+		-moz-border-radius: 0px 5px 5px 0px; 
+		-webkit-border-radius: 0px 5px 5px 0px; 
+		border-top: 1px solid #b97a7a;
+		border-right: 1px solid #b97a7a;
+		border-bottom: 1px solid #b97a7a;
+		border-left: 0;
+		background: #fcf9fa;
+		color: #762f44;
+		cursor: pointer;
+	}
+	.removeItem:hover {
+		background: #f8eff2;
+	}
+	.removeItem:active {
+	    background: #f2dee4;
+	}
+	
+	#spaceFoot, #totalLabelFoot {
+	    background: rgba(122, 185, 122, 0.7); 
+		color: #fff;
+		font-weight: 800;
+		text-shadow: -1px 0 #6da66d, 0 1px #6da66d, 1px 0 #6da66d, 0 -1px #6da66d; 
+		/*padding-top: 2px;
+		padding-bottom: 1px;*/
+		/*border-top: 1px solid #3d5c3d; */
+		border-bottom: 1px solid #3d5c3d; 
+		font-stretch: ultra-condensed;
+		font-size: 110%;
+	} 
+	#spaceFoot {
+	    width: 20px;
+		padding: 0px 20px 0px 20px;
+		border-left: 1px solid #3d5c3d; 
+	}
+	#totalLabelFoot {
+	    width: 200px;
+		padding: 0px 21px 0px 20px;
+		text-align: right;
+		border-right: 1px solid #3d5c3d;
+	}	
+	#priceFoot {
+		width: 110px;
+		padding: 2px 20px 1px 20px;
+		text-align: center;
+		border-right: 1px solid #3d5c3d; 
+		border-bottom: 1px solid #3d5c3d;
+	}
+		
+		
+/*  GREEN VERSION
+	#newTransactionButton {
+	    margin-top: 40px;
+		margin-left: 12px;
+		
+		font: bold 12px/18px sans-serif;
+		background: #DEEEDE;    /*HELP ME
+		/*background-color: rgba(59, 86, 148, 0.2);
+		/*background-color: #7AB97A; 
+		color: #000;
+		cursor: pointer;	    
+		border-radius: 5px; 
+		-moz-border-radius: 5px; 
+		-webkit-border-radius: 5px; 
+		/*border: 1px solid rgba(59, 86, 148, 0.9);
+		border: 1px solid #509650;
+		padding: 10px 40px;
+		
+		-webkit-transition: 0.4s;
+		transition: 0.4s;
+	}
+	#newTransactionButton:disabled {
+	    border-color: rgba(80, 150, 80, 0.4);
+		background: rgba(222, 238, 222, 0.5);
+		color: rgba(0, 0, 0, 0.4);
+		cursor: default;
+	}	
+*/
+	#newTransactionButton {
+	    margin-top: 40px;
+		margin-left: 12px;
+		
+		font: bold 12px/18px sans-serif;
+		background: #DDE3F1;
+		color: #000;
+		cursor: pointer;	    
+		border-radius: 5px; 
+		-moz-border-radius: 5px; 
+		-webkit-border-radius: 5px; 
+		border: 1px solid #5D7BBE;
+		padding: 10px 40px;
+		
+		-webkit-transition: 0.4s;
+		transition: 0.4s;
+	}
+	#newTransactionButton:disabled {
+	    border-color: rgba(93, 123, 190, 0.4);
+		background: rgba(221, 227, 241, 0.5);
+		color: rgba(0, 0, 0, 0.4);
+		cursor: default;
+	}		
+	#newTransactionButton:hover:enabled {
+		-webkit-transition: 0.2s;
+		transition: 0.2s;
+	    background-color: rgba(59, 86, 148, 0.6);
+		border: 1px solid rgba(59, 86, 148, 0.9);
+		color: #fff;
+	}
+	#newTransactionButton:active:enabled {
+	    background-color: rgba(59, 86, 148, 0.8);
+		border: 1px solid #3b5694;
+	}	
+	
+	
+	
+	
+	@-webkit-keyframes hvr-back-pulse {
+	  50% {
+		/*background-color: rgba(32, 152, 209, 0.75);     /*   #3d5c3d    rgba(122, 185, 122, 0.7);  */
+		background-color: rgba(122, 185, 122, 1);
+		/*background-color: rgba(59, 86, 148, 0.75);*/
+	  }
+	}
+	@keyframes hvr-back-pulse {
+	  50% {
+		/*background-color: rgba(32, 152, 209, 0.75);    /*    #3d5c3d     rgba(122, 185, 122, 0.7);  */
+		background-color: rgba(122, 185, 122, 1);
+		/*background-color: rgba(59, 86, 148, 0.75);*/
+	  }
+	}
+	.hvr-back-pulse {
+	  display: inline-block;
+	  vertical-align: middle;
+	  -webkit-transform: translateZ(0);
+	  transform: translateZ(0);
+	  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+	  -webkit-backface-visibility: hidden;
+	  backface-visibility: hidden;
+	  -moz-osx-font-smoothing: grayscale;
+	  overflow: hidden;
+	  -webkit-transition-duration: 0.5s;
+	  transition-duration: 0.5s;
+	  -webkit-transition-property: color, background-color;
+	  transition-property: color, background-color;
+	  
+	  /*-webkit-animation-name: hvr-back-pulse;
+	  animation-name: hvr-back-pulse;
+	  -webkit-animation-duration: 1s;
+	  animation-duration: 1s;
+	  -webkit-animation-delay: 0.5s;
+	  animation-delay: 0.5s;
+	  -webkit-animation-timing-function: linear;
+	  animation-timing-function: linear;
+	  -webkit-animation-iteration-count: infinite;
+	  animation-iteration-count: infinite;
+	  /*background-color: #00F;
+	  background-color: #00F;
+	  color: white;*/
+	}
+	.hvr-back-pulse:hover, .hvr-back-pulse:focus, .hvr-back-pulse:active{
+	  -webkit-animation-name: hvr-back-pulse;
+	  animation-name: hvr-back-pulse;
+	  -webkit-animation-duration: 2s;
+	  animation-duration: 2s;
+	  -webkit-animation-delay: 0.5s;
+	  animation-delay: 0.5s;
+	  -webkit-animation-timing-function: linear;
+	  animation-timing-function: linear;
+	  -webkit-animation-iteration-count: infinite;
+	  animation-iteration-count: infinite;
+	  /*background-color: #2098d1;
+	  background-color: #2098d1;
+	  background-color: rgb(122, 185, 122);
+	  background-color: rgb(122, 185, 122);*/
+	  background-color: #3b5694;
+	  background-color: #3b5694;
+	  color: white;
+	}	
+	
+	
+  </style>
+ </head>
+ <body>
+ <!--
+  <h1>Welcome to the Garage Sale</h1>
+  <ul>
+    <li><a href="/Josh">Josh</a></li>
+    <li><a href="/Sarah">Sarah</a></li>
+    <li><a href="/Melanie">Melanie</a></li>
+    <li><a href="/Sam">Sam</a></li>	
+    <li><a href="/Jeff">Jeff</a></li>
+    <li><a href="/Jody">Jody</a></li>	
+    <li><a href="/Bethany">Bethany</a></li>
+    <li><a href="/Derik">Derik</a></li>	
+    <li><a href="/Kim">Kim</a></li>		
+	<li><a href="/Bob">Bob</a></li>	
+	<li><a href="/Mabel">Mabel</a></li>	
+	<li><a href="/Fail">Fail</a></li>	
+  </ul>
+  -->
+  
+  <div id="pageContainer">
+    <div id="header">
+	  <div id="connectIndication"></div>	
+	  <div id="menuContainer">
+	    <ul id="menu">
+		 <li id="menuLI">
+		   Menu
+		   <ul id="subMenu">
+		     <li id="homeStart">Home</li>
+	         <li id="new">New</li>
+	         <li id="load">Load</li>
+		   </ul>
+		 </li>
+	    </ul>
+	  </div>
+	  <label id="headerLabel">Garage Sale</label>
+	</div>
+    <div class="mainContainer"></div>
+	
+  </div>
+  
+ </body>
+ <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="/jquery.mCustomScrollbar.concat.min.js"></script>
+  <script type="text/javascript" language="javascript">
+  
+    var socket = io(); 
+    var inGarageSale = false;
+    var names = [];
+	var priceSel = null;
+	var nameSel = null;
+	var isRefreshing = false;
+	var numTransactionItems = 0;
+	var totalPrice = 0;
+  
+	function buildSaleContainer() {
+		var newHtml = '<div id="saleContainer" class="mainContainer">' +
+					    '<div id="fieldContainer">' + 
+						  '<div id="inputContainer">' +
+						    '<label id="inputLabel">Item</label>' + 
+							'<span id="dollar">$</span><input id="itemInput" autocomplete="off" maxlength="9"/>' +
+						  '</div>' +
+						  '<div id="buttonContainer">' + 
+						    '<table id="buttonTable">' +
+							  '<tr><td><button class="buttonPriceClass regular-hov" data-price="0.25">$0.25</button></td><td><button class="buttonPriceClass regular-hov" data-price="1.50">$1.50</button></td></tr>' +
+							  '<tr><td><button class="buttonPriceClass regular-hov" data-price="0.50">$0.50</button></td><td><button class="buttonPriceClass regular-hov" data-price="1.75">$1.75</button></td></tr>' +
+							  '<tr><td><button class="buttonPriceClass regular-hov" data-price="0.75">$0.75</button></td><td><button class="buttonPriceClass regular-hov" data-price="2.00">$2.00</button></td></tr>' +
+							  '<tr><td><button class="buttonPriceClass regular-hov" data-price="1.00">$1.00</button></td><td><button class="buttonPriceClass regular-hov" data-price="2.25">$2.25</button></td></tr>' +
+							  '<tr><td><button class="buttonPriceClass regular-hov" data-price="1.25">$1.25</button></td><td><button class="buttonPriceClass regular-hov" data-price="2.50">$2.50</button></td></tr>' +
+							'</table>' +
+							'<div id="nameTableContainer"><div id="nameTableOuterContainer"><div id="nameTableInnerContainer">' +
+							  '<table id="nameTable">';
+							    for(var i=0; i<names.length; i++)
+							        newHtml += '<tr><td><button class="buttonNameClass regular-hov">' + names[i] + '</button></td></tr>';
+
+		newHtml +=			  '</table>' +
+						    '</div></div></div>' +
+						  '</div>' +
+						  '<div id="transactionContainer">' +
+						    '<label id="transactionTableLabel">Current Transaction</label>' +
+							'<div id="transactionTableContainer">' +
+						      '<table id="transactionTable">' +
+								//'<tr><th id="titleHead" colspan="3">Current Transaction</th></tr>' + 
+							    '<thead><tr><th id="noHead">No.</th><th id="nameHead">Name</th><th id="priceHead">Price</th><th id="removeHead"></th></tr></thead>' +							
+								'<tbody id="transactionBody">' +
+								'<tr class="emptyRow"><td class="itemNumCell">&nbsp</td><td class="nameCell"> </td><td class="priceCell"> </td></tr>' +
+/*						        '<tr><td class="itemNumCell">1</td><td class="priceCell">$0.25</td><td class="nameCell">Josh</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +
+								'<tr><td class="itemNumCell">2</td><td class="priceCell">$0.50</td><td class="nameCell">Sarah</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +
+								'<tr><td class="itemNumCell">3</td><td class="priceCell">$1.50</td><td class="nameCell">Josh</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +
+						        '<tr><td class="itemNumCell">1</td><td class="priceCell">$0.25</td><td class="nameCell">Josh</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +
+								'<tr><td class="itemNumCell">2</td><td class="priceCell">$0.50</td><td class="nameCell">Sarah</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +
+								'<tr><td class="itemNumCell">1</td><td class="priceCell">$0.25</td><td class="nameCell">Josh</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +								
+								'<tr><td class="itemNumCell">1</td><td class="priceCell">$0.25</td><td class="nameCell">Josh</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +
+								'<tr><td class="itemNumCell">2</td><td class="priceCell">$0.50</td><td class="nameCell">Sarah</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +
+								'<tr><td class="itemNumCell">1</td><td class="priceCell">$0.25</td><td class="nameCell">Josh</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +
+								'<tr><td class="itemNumCell">2</td><td class="priceCell">$0.50</td><td class="nameCell">Sarah</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +
+								'<tr><td class="itemNumCell">1</td><td class="priceCell">$0.25</td><td class="nameCell">Josh</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +
+								'<tr><td class="itemNumCell">2</td><td class="priceCell">$0.50</td><td class="nameCell">Sarah</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +
+								'<tr><td class="itemNumCell">1</td><td class="priceCell">$0.25</td><td class="nameCell">Josh</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +
+								'<tr><td class="itemNumCell">2</td><td class="priceCell">$0.50</td><td class="nameCell">Sarah</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +
+								'<tr><td class="itemNumCell">1</td><td class="priceCell">$0.25</td><td class="nameCell">Josh</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +
+								'<tr><td class="itemNumCell">2</td><td class="priceCell">$0.50</td><td class="nameCell">Sarah</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +
+								'<tr><td class="itemNumCell">1</td><td class="priceCell">$0.25</td><td class="nameCell">Melanie</td><td class="buttonCell"><button class="removeItem">X</button></td></tr>' +   */
+								'</tbody>' +	
+								'<tfoot>' +
+								  '<tr>' +
+								     '<td id="spaceFoot"></td><td id="totalLabelFoot">Total</td><td id="priceFoot"></td>' +
+								  '</tr>' + 
+								'</tfoot>' +
+							  '</table>' +
+							'</div>' +
+						  '</div>' +
+						  '<button id="newTransactionButton" >New Transaction</button>' +
+						'</div>' +
+					  '</div>';
+		
+		
+		priceSel = null;
+		nameSel = null;
+		numTransactionItems = 0;
+		totalPrice = 0;
+		
+		$('.mainContainer').replaceWith(newHtml);	
+		$('.buttonNameClass').each(function(i) {
+			$(this).prop('disabled', true);
+		});
+		
+		$('#newTransactionButton').prop('disabled', true);
+		$('#itemInput').focus();
+	}
+  
+    function startCreation() {
+	    names = [];
+	    $('#connectIndication').css('border', '1px solid #B20000');		
+	    //$('#connectIndication').css('-webkit-box-shadow', '0 0 7px #F00');
+	    //$('#connectIndication').css('-moz-box-shadow', '0 0 7px #F00');
+	    //$('#connectIndication').css('box-shadow', '0 0 7px #F00'); 
+	    
+		var newHtml = '<ul id="subMenu">' +
+					     '<li id="homeStart">Home</li>' +
+	                     '<li id="new">New</li>' +
+	                     '<li id="load">Load</li>' +
+		                '</ul>';	    
+	    $('#subMenu').replaceWith(newHtml);
+		
+	    var newHtml2 = '<div id="homeContainer" class="mainContainer"><p class="centeredText">Welcome to the Garage Sale Web Application!<br><br>Click the menu to choose ' +
+		'to create a new Garage Sale or load an existing one.</p></div>';
+		
+		$('.mainContainer').replaceWith(newHtml2);		
+	}
+	
+	function garageSaleCreation(names) {
+	    $('#connectIndication').css('border', '1px solid #00B200');		
+	    //$('#connectIndication').css('-webkit-box-shadow', '0 0 0px #0F0');
+	    //$('#connectIndication').css('-moz-box-shadow', '0 0 0px #0F0');
+	    //$('#connectIndication').css('box-shadow', '0 0 0px #0F0'); 	    
+		
+		var newHtml = '<ul id="subMenu"><li id="homeSale">Home</li>';
+		for(var i=0; i<names.length; i++) {
+		    newHtml += '<a href="/'+names[i]+'"><li id="subMenuLI-'+i+'">'+names[i]+'</li></a>';
+		}
+		newHtml += '<li id="endSale">End Sale</li></ul>';
+		$('#subMenu').replaceWith(newHtml);
+		
+		buildSaleContainer();
+	}  
+	
+	
+	
+  
+    $(document).ready(function() {
+		socket.emit('connection', 'pls');
+	});
+  
+  
+  	$('#menuLI').click(function() {
+		$('#subMenu').toggle();
+	});
+  
+	$(document).on('click', '#homeSale', function() {
+		buildSaleContainer();
+	});
+  
+  
+  
+	function resetPriceAndButtons(ele) {
+		$('.buttonPriceClass').each(function(i) {
+			$(this).css('background', '#fbfbfc');   //#EEE
+			$(this).css('border-color', 'rgba(59, 86, 148, 0.6)');
+			$(this).css('color', '#000');		    
+		});	
+		$('#itemInput').val('');
+		priceSel = null;	
+		$('.buttonNameClass').each(function(i) {
+			$(this).prop('disabled', true);
+		});			
+		$('#itemInput').focus();
+		$(ele).css('background', '');	    
+	}
+	
+	function updateTable(ele, price) {
+	    totalPrice = ((+totalPrice) + (+price)).toFixed(2);
+		price += '';
+		if(numTransactionItems == 0) {
+		    $('.emptyRow').remove();
+			$('#transactionTable tfoot').css('visibility', 'visible');
+			$('#newTransactionButton').prop('disabled', false);
+		}
+		
+		$('#priceFoot').html('$'+totalPrice);
+		
+		//$('#transactionTable tbody tr:last').after(
+		$('#transactionTable tbody').append(
+		    '<tr class="contentRow"><td class="itemNumCell">' + ++numTransactionItems + '</td>' +
+			'<td class="nameCell">' + $(ele).text() + '</td>' +
+		    '<td class="priceCell">$' + price + '</td>' +	
+		    '<td class="buttonCell"><button class="removeItem">X</button></td></tr>'
+		);
+		
+		if(numTransactionItems > 7)
+		    $('#transactionTable tfoot td').css('border-top', '1px solid #3d5c3d');
+		$('#transactionTable tbody').scrollTop($('#transactionTable tbody')[0].scrollHeight-(28*8));
+	}
+  
+	//Price button hover/active functionality--------------------------------------------------------
+	$(document).on('mouseenter', '.buttonPriceClass', function() {
+	    if(priceSel == null) {
+		    $(this).css('background', '#f4f5f6');     //#DDD (Hover)
+		}
+		else {
+			if(priceSel != this)
+				$(this).css('background', 'rgba(251, 251, 252, 0.9)');   //238, 238, 238
+			else
+				$(this).css('background', 'rgba(59, 86, 148, 0.7)');
+		}
+	});	
+	$(document).on('mouseleave', '.buttonPriceClass', function() {
+	    if(priceSel == null) {
+		    $(this).css('background', '#fbfbfc');    //#EEE (Default)
+		}
+		else {
+		    
+			if(priceSel != this)
+				$(this).css('background', 'rgba(251, 251, 252, 0.5)');  //238, 238, 238
+			else
+				$(this).css('background', 'rgba(59, 86, 148, 0.6)');   
+		}
+	});  
+	$(document).on('click', '.buttonPriceClass', function() {
+	    var ele = this;
+		if(ele != priceSel) {
+		    priceSel = ele;
+			$('.buttonPriceClass').each(function(i) {
+				if(this == ele) {
+					//$(this).css('background', '#ccdec4');   #56943B    #3b5694
+					$(this).css('background', 'rgba(59, 86, 148, 0.6)');
+					$(this).css('color', '#FFF');
+					$(this).css('border-color', 'rgba(59, 86, 148, 0.6)');
+				}
+				else {
+					$(this).css('background', 'rgba(251, 251, 252, 0.5)');   //238, 238, 238
+					$(this).css('border-color', 'rgba(59, 86, 148, 0.2)');
+					$(this).css('color', '#000');
+				}
+			});
+			$('#itemInput').val($(priceSel).data('price'));
+			$('.buttonNameClass').each(function(i) {
+			    $(this).prop('disabled', false);
+			});
+		}
+		else {
+			resetPriceAndButtons();
+		}
+	});
+	//-------------------------------------------------------------------------------------------------
+	
+	
+	$(document).on('input', '#itemInput', function() {
+		var disableBool = true;
+	    if($(this).val().length > 0)
+		    disableBool = false;
+			
+		$('.buttonNameClass').each(function(i) {
+			$(this).prop('disabled', disableBool);
+		});	
+	});	
+	$(document).on('keydown', '#itemInput', function(e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+             // Allow: Ctrl+A55
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+             // Allow: Ctrl+C
+            (e.keyCode == 67 && e.ctrlKey === true) ||
+             // Allow: Ctrl+X
+            (e.keyCode == 88 && e.ctrlKey === true) ||
+             // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }	    
+		
+		//Ensure that there is at most only 2 numbers after a decimal point
+		var text = $(this).val();		
+		var selIndex = $(this)[0].selectionStart;  //Cursor position
+		var dotIndex = text.indexOf('.');          //Decimal position
+		if((dotIndex != -1) && (selIndex > dotIndex) && (text.substring(dotIndex).length > 2))
+		    e.preventDefault();
+	});
+	
+	
+	
+	
+	
+
+	$(document).on('click', '.buttonNameClass', function() {
+		var price = (parseFloat($('#itemInput').val())).toFixed(2);  //Get the value with 2 decimals only
+		$(this).css('background', 'rgba(122, 185, 122, 0.3)');
+		setTimeout(resetPriceAndButtons, 200, this);  //Delay for 400 ms for effect		
+		setTimeout(updateTable, 200, this, price);  //Delay for 400 ms for effect	
+	});	
+  
+	$(document).on('click', '.removeItem', function() {
+	    var row = $(this).parent().parent();
+		var index = $(row).find(".itemNumCell").html();   //Item Number also used as the index for rows
+		//Update the item Number for all succeeding rows 
+		$('#transactionTable').find('.itemNumCell').slice(index).each(function(i) {
+		    $(this).html(index++ + '');
+		});
+		numTransactionItems--;
+		if(numTransactionItems == 0) {		
+		   // $('#transactionTable tbody tr:last').after('<tr class="emptyRow"><td class="itemNumCell">&nbsp</td>' + 
+		   $('#transactionTable tbody').append('<tr class="emptyRow"><td class="itemNumCell">&nbsp</td>' +
+			    '<td class="nameCell"> </td><td class="priceCell"> </td></tr>'
+			);
+			$('#transactionTable tfoot').css('visibility', 'hidden');
+			$('#newTransactionButton').prop('disabled', true);
+		}
+		if(numTransactionItems < 8)
+		    $('#transactionTable tfoot td').css('border-top', 'none');
+		
+		$(row).remove();
+	});
+	
+  
+	$(document).on('click', '#newTransactionButton', function() {
+		$('#newTransactionButton').css('background-color', 'rgba(59, 86, 148, 0.8)');
+		$('#newTransactionButton').css('border-color', '#3b5694');
+		$('#newTransactionButton').css('color', '#FFF');
+	    setTimeout(clearTransactionTable, 400);
+	});
+  
+	function clearTransactionTable() {
+		$('#newTransactionButton').prop('disabled', true);
+		$('.contentRow').remove();
+		$('#transactionTable tfoot').css('visibility', 'hidden');
+		numTransactionItems = 0;		
+		$('#transactionTable tbody').append('<tr class="emptyRow"><td class="itemNumCell">&nbsp</td>' +
+			'<td class="nameCell"> </td><td class="priceCell"> </td></tr>'
+		);
+		$('#newTransactionButton').css('background-color', '');
+		$('#newTransactionButton').css('border-color', '');
+		$('#newTransactionButton').css('color', '');	
+	}  
+  
+  
+  
+    $(document).on('click', '#endSale', function() {
+	    socket.emit('end sale', 'now');
+		inGarageSale = false;
+		startCreation();
+		
+		if(location.pathname != "/")
+	        document.location.href = "/";	
+	});
+  
+    $(document).on('click', '#homeStart', function() {
+	    var newHtml = '<div id="homeContainer" class="mainContainer"><p class="centeredText">Welcome to the Garage Sale Web Application!<br><br>Click the menu to choose ' +
+		'to create a new Garage Sale or load an existing one.</p></div>';
+		$('.mainContainer').replaceWith(newHtml);
+	});    
+  
+    $(document).on('click', '#new', function() {
+	    var newHtml = '<div id="newContainer" class="mainContainer">'+
+		                '<p class="centeredText">Choose who is participating in the Garage Sale</p>' +
+		                '<form id="newForm" onsubmit="return false">' +  
+						  '<p>' +
+						    '<label>Name</label><input class="nameIn" type="text" data-invalid="n" data-same="0"/><button class="addName">+</button>' +
+						  '</p>' +
+						'</form>' +
+					  '<button id="newGarageSaleButton">Done</button>' +
+					  '<label id="nameInvalidErrorLabel">Error!  You cannot use spaces, back-slashes, or forward-slashes</label>' +
+					  '<label id="nameSameErrorLabel">Error!  You cannot use the same name twice or more</label>' + 
+					  '</div>';
+		$('.mainContainer').replaceWith(newHtml);
+		$('.nameIn').focus();
+	});
+	
+    $(document).on('click', '#load', function() {
+	    var newHtml = '<div id="loadContainer" class="mainContainer"><p class="CenteredText">Select the past Garage Sale you would like to load<br><br>COMING SOON</p></div>';
+		$('.mainContainer').replaceWith(newHtml);
+	});	
+
+	
+	
+	$(document).on('input', '.nameIn', function() {
+		var str = $(this).val();
+	    if(str.length > 0) {
+		    //if((str[str.length-1] != ' ') && (str[str.length-1] != '\\') && (str[str.length-1] != '/'))
+			//for(var c in str) {
+			for(var i=0; i<str.length; i++) {
+			    if((str[i] == ' ') || (str[i] == '\\') || (str[i] == '/')) {
+				     //$(this).css('border', '1px solid #BE5D7B');
+					 //$(this).css('background', 'rgba(148, 59, 86, 0.05');
+					 //$(this).css('background', '#dec4cc');
+					 $(this).data('invalid', 'y');
+					 //$('#nameInvalidErrorLabel').css('visibility', 'visible');
+					 break;
+				}
+				else {
+					//$('#nameInvalidErrorLabel').css('visibility', 'hidden');
+				    $(this).data('invalid', 'n');
+				}
+			}
+			//checkNames();
+		}
+		else {
+			//$('#nameInvalidErrorLabel').css('visibility', 'hidden');
+			$(this).data('invalid', 'n');
+		    $(this).css('border', '');
+			$(this).css('background', '');
+		}
+		checkNames();
+	});
+	
+	function checkNames() {
+		$('.nameIn').each(function(i) {
+			$(this).data('same', '0');
+		});
+		$('.nameIn').each(function(i) {
+			var ele = this;
+			$('.nameIn').each(function(i) {
+				if(ele != this) {
+					if($(ele).val() != '') {
+						if($(ele).val() == $(this).val()) {
+							if(!(/\s/.test($(ele).val()))) {
+								$(ele).data('same', '' + parseInt($(ele).data('same')) + 1);
+								$(this).data('same', '' + parseInt($(this).data('same')) + 1);
+							}
+						}
+					}
+				}
+			});
+		});
+		
+		var numSame = 0;
+		var numInvalid = 0;
+		$('.nameIn').each(function(i) {		
+			if(parseInt($(this).data('same')) == 0) {
+				if($(this).data('invalid') == 'n') {
+					$(this).css('background', 'rgba(86, 148, 59, 0.05');
+					$(this).css('border', '1px solid #7BBE5D');
+				}
+				else {
+					numInvalid++;
+					$(this).css('border', '1px solid #BE5D7B');
+					$(this).css('background', 'rgba(148, 59, 86, 0.05');
+				}
+			}
+			else {
+				numSame++;
+				if($(this).data('invalid') == 'y')
+				    numInvalid++;
+				$(this).css('border', '1px solid #BE5D7B');
+				$(this).css('background', 'rgba(148, 59, 86, 0.05');
+			}
+			
+			if($(this).val().length == 0) {
+			    $(this).css('border', '');
+				$(this).css('background', '');
+			}
+		});
+		
+		if(numSame > 0)
+		    $('#nameSameErrorLabel').css('visibility', 'visible');
+		else
+		    $('#nameSameErrorLabel').css('visibility', 'hidden');
+		
+		if(numInvalid > 0)
+		    $('#nameInvalidErrorLabel').css('visibility', 'visible');
+		else
+		    $('#nameInvalidErrorLabel').css('visibility', 'hidden');
+		
+		if(($('#nameSameErrorLabel').css('visibility') == 'visible') || ($('#nameInvalidErrorLabel').css('visibility') == 'visible'))
+		    $('#newGarageSaleButton').prop('disabled', true);
+		else
+			$('#newGarageSaleButton').prop('disabled', false);
+	}
+	
+	
+	
+	
+	
+	
+    $(document).on('click', '.addName', function() { 	
+		$(this).attr('class', 'removeName');
+		$(this).text('-');
+		
+		$('#newForm').append('<p><label>Name</label><input class="nameIn" type="text" data-invalid="n" data-same="0"/><button class="addName">+</button></p>');
+		$('.nameIn').focus();
+	});
+	
+	$(document).on('click', '.removeName', function() {
+	    $(this).parent().remove();
+		checkNames();
+		$('.nameIn').focus();
+	});
+	
+	$(document).on('click', '#newGarageSaleButton', function() {
+		var namesIter = 0;	
+		$('.nameIn').each(function(i) {	
+		    if($(this).val() != "")
+		        names[namesIter++] = $(this).val();
+		});	
+		
+		if(names.length > 0)
+	        socket.emit('new sale', names);	
+	});
+	
+	
+	$(window).on('beforeunload', function() {
+	    isRefreshing = true;
+	});
+	
+	
+	//Handle Socket Identifiers ----------------------------------------
+	socket.on('disconnect', function() {
+		//Only for if the server goes down
+		if(!isRefreshing) {
+	        inGarageSale = false;
+		    startCreation();
+		}
+	});
+	
+	socket.on('in garage sale', function(bool, data) {
+	    inGarageSale = bool;
+		if(inGarageSale) {
+		    names = data.slice();
+		    garageSaleCreation(names);
+		}
+		else
+		    startCreation();
+	});
+	
+	socket.on('sale over', function(data) {
+	    inGarageSale = false;
+		startCreation();		
+		if(location.pathname != "/")
+	        document.location.href = "/";	
+	});
+	//------------------------------------------------------------------
+  </script>
+</html>
